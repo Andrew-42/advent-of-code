@@ -1,4 +1,6 @@
 module Main where
 
+import Year2024.Day01 (solve)
+
 main :: IO ()
-main = putStrLn "Hello, Haskell!"
+main = solve
