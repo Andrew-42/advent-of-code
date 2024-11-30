@@ -58,11 +58,11 @@ Example:
 281
 -}
 part2 :: String -> Int
-part2 = sum . map toCoord . lines
+part2 =
+    sum
+        . map (toInt . filter (/= "") . map stringToDigit . tails)
+        . lines
   where
-    toCoord :: String -> Int
-    toCoord s = toInt . filter (/= "") $ map stringToDigit (tails s)
-
     toInt :: [String] -> Int
     toInt xs = read (head xs) * 10 + read (last xs)
 
