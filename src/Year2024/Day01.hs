@@ -1,6 +1,5 @@
 module Year2024.Day01 (solve) where
 
-import Data.Char (isDigit)
 import Data.List (sort)
 
 {- | Part 1
