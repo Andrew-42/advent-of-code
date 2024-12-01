@@ -1,4 +1,4 @@
-module Year2024.Day03 where
+module Year2024.Day03 (solve) where
 
 {- | Part 1
 
@@ -19,6 +19,9 @@ Example:
 -}
 part2 :: String -> Int
 part2 = undefined
+
+pInput :: String -> a
+pInput = undefined
 
 solve :: IO ()
 solve = do

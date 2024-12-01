@@ -1,4 +1,4 @@
-module Year2023.Day02 where
+module Year2023.Day02 (solve) where
 
 {- | Part 1
 

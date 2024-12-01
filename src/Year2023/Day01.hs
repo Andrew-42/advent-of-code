@@ -1,4 +1,4 @@
-module Year2023.Day01 where
+module Year2023.Day01 (solve) where
 
 import Data.Char (isDigit)
 import Data.List (isPrefixOf, tails)

@@ -1,4 +1,4 @@
-module Year2024.Day01 where
+module Year2024.Day01 (solve) where
 
 import Data.Char (isDigit)
 import Data.List (sort)
@@ -40,26 +40,16 @@ There's just one problem: by holding the two lists up side by side (your puzzle
 input), it quickly becomes clear that the lists aren't very similar. Maybe you
 can help The Historians reconcile their lists?
 
-Example:
+Example should be 11:
 
 >>> let example = "3   4\n4   3\n2   5\n1   3\n3   9\n3   3"
 >>> part1 example
 11
 -}
 part1 :: String -> Int
-part1 s = sum (zipWith (\a b -> abs (a - b)) (firstList s) (secondList s))
-
-firstList :: String -> [Int]
-firstList =
-    sort
-        . map (read . takeWhile isDigit)
-        . lines
-
-secondList :: String -> [Int]
-secondList =
-    sort
-        . map (read . reverse . takeWhile isDigit . reverse)
-        . lines
+part1 s = sum $ zipWith (\a b -> abs (a - b)) ls rs
+  where
+    (ls, rs) = pInput s
 
 {- | Part 2
 
@@ -78,24 +68,30 @@ list appears in the right list. Calculate a total similarity score by adding up
 each number in the left list after multiplying it by the number of times that
 number appears in the right list.
 
-Example:
+Example should be 31:
 
 >>> let example = "3   4\n4   3\n2   5\n1   3\n3   9\n3   3"
 >>> part2 example
 31
 -}
 part2 :: String -> Int
-part2 c = sum $ map (\num -> num * numCount num) (firstList c)
+part2 c = sum . map (\num -> num * numCount num) $ ls
   where
+    (ls, rs) = pInput c
+
     numCount :: Int -> Int
-    numCount num = length $ filter (== num) (secondList c)
+    numCount num = length $ filter (== num) rs
+
+pInput :: String -> ([Int], [Int])
+pInput i = (sort ls, sort rs)
+  where
+    (ls, rs) = unzip . map intPair . lines $ i
+
+    intPair :: String -> (Int, Int)
+    intPair s = (\ws -> (read $ head ws, read $ last ws)) $ words s
 
 solve :: IO ()
 solve = do
-    -- example <- readFile "./src/Year2024/data/day01-example.txt"
-    -- print $ "Part1 example: " ++ show (part1 example)
-    -- print $ "Part2 example: " ++ show (part2 example)
-
     content <- readFile "./src/Year2024/data/day01.txt"
     print $ "Part1 solution: " ++ show (part1 content)
     print $ "Part2 solution: " ++ show (part2 content)
