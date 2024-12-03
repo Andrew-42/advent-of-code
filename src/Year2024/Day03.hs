@@ -16,11 +16,22 @@ Example should be 161:
 part1 :: String -> Int
 part1 = sum . map multiply . mapMaybe parseInstruction . tails
 
-data Instruction = Mul Int Int | Do | Dont deriving (Show)
-
 multiply :: Instruction -> Int
 multiply (Mul a b) = a * b
 multiply _ = 0
+
+{- | Part 2
+
+Example should be 48:
+
+>>> let example = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
+>>> part2 example
+48
+-}
+part2 :: String -> Int
+part2 = snd . evalEnabled (True, 0) . mapMaybe parseInstruction . tails
+
+data Instruction = Mul Int Int | Do | Dont deriving (Show)
 
 -- >>> parseMul "mul(12,436)"
 -- Just (Mul 12 436)
@@ -41,17 +52,6 @@ takeNum s = if inBounds num then Just num else Nothing
 
     inBounds :: String -> Bool
     inBounds ds = length ds `elem` [1 .. 3]
-
-{- | Part 2
-
-Example should be 48:
-
->>> let example = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
->>> part2 example
-48
--}
-part2 :: String -> Int
-part2 = snd . evalEnabled (True, 0) . mapMaybe parseInstruction . tails
 
 -- >>> parseDo "do()dbrakadabra"
 -- >>> parseDo "don't()dbrakadabra"
