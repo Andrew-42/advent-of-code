@@ -1,4 +1,4 @@
-module Year2024.Day04 (solve) where
+module Year2024.Day08 (solve) where
 
 {- | Part 1
 
@@ -25,10 +25,10 @@ pInput = undefined
 
 solve :: IO ()
 solve = do
-    -- example <- readFile "./src/Year2024/data/day04-example.txt"
+    -- example <- readFile "./src/Year2024/data/day08-example.txt"
     -- print $ "Part1 example: " ++ show (part1 example)
     -- print $ "Part2 example: " ++ show (part2 example)
 
-    content <- readFile "./src/Year2024/data/day04.txt"
+    content <- readFile "./src/Year2024/data/day08.txt"
     print $ "Part1 solution: " ++ show (part1 content)
     print $ "Part2 solution: " ++ show (part2 content)
