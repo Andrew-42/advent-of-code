@@ -30,3 +30,6 @@ strip = lstrip . rstrip
 -}
 countIf :: (a -> Bool) -> [a] -> Int
 countIf p = length . filter p
+
+zipWithNext :: [a] -> [(a, a)]
+zipWithNext xs = zip xs $ tail xs
