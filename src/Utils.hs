@@ -31,5 +31,9 @@ strip = lstrip . rstrip
 countIf :: (a -> Bool) -> [a] -> Int
 countIf p = length . filter p
 
+{- | Create a list of pairs
+>>> zipWithNext [1, 2, 3, 4]
+[(1,2),(2,3),(3,4)]
+-}
 zipWithNext :: [a] -> [(a, a)]
 zipWithNext xs = zip xs $ tail xs

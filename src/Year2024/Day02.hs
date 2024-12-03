@@ -114,9 +114,18 @@ isSafeWithouOne :: [Int] -> Bool
 isSafeWithouOne = any isSafeLevel . genListsWithouOne
 
 -- >>> genListsWithouOne [1, 2, 3, 4, 5]
+-- [[2,3,4,5],[1,3,4,5],[1,2,4,5],[1,2,3,5],[1,2,3,4]]
 genListsWithouOne :: [a] -> [[a]]
 genListsWithouOne =
     zipWith (++) <$> (map init . tail . inits) <*> (map tail . init . tails)
+
+-- >>> dropOneSublists [1, 2, 3, 4, 5]
+-- [[2,3,4,5],[1,3,4,5],[1,2,4,5],[1,2,3,5],[1,2,3,4]]
+dropOneSublists :: [a] -> [[a]]
+dropOneSublists = sublists []
+  where
+    sublists _ [] = []
+    sublists xs (y : ys) = (xs ++ ys) : sublists (xs ++ [y]) ys
 
 solve :: IO ()
 solve = do
