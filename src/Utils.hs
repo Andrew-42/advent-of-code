@@ -31,6 +31,27 @@ strip = lstrip . rstrip
 countIf :: (a -> Bool) -> [a] -> Int
 countIf p = length . filter p
 
+-- >>> dropLast 3 "abcdef"
+-- "abc"
+dropLast :: Int -> [a] -> [a]
+dropLast n = reverse . drop n . reverse
+
+{- | Matrix transpose
+We expect all the lists to have the same length
+
+>>> transpose ["abc", "abc", "abc"]
+["aaa","bbb","ccc"]
+-}
+transpose :: [[a]] -> [[a]]
+transpose ([] : _) = []
+transpose xs = map head xs : transpose (map tail xs)
+
+-- >>> windowed 3 sum [1, 2, 1, 1, 1]
+-- [4,4,3,2,1]
+windowed :: Int -> ([a] -> b) -> [a] -> [b]
+windowed _ _ [] = []
+windowed n f xs = f (take n xs) : windowed n f (tail xs)
+
 {- | Create a list of pairs
 >>> zipWithNext [1, 2, 3, 4]
 [(1,2),(2,3),(3,4)]

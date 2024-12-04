@@ -84,13 +84,13 @@ countDiagonalR [_] = []
 countDiagonalR [_, _] = []
 countDiagonalR [_, _, _] = []
 countDiagonalR xs@(a : b : c : d : _) = diagCount : countDiagonalR (tail xs)
-  where
-    l1 = drop 3 a
-    l2 = dropLast 1 . drop 2 $ b
-    l3 = dropLast 2 . drop 1 $ c
-    l4 = dropLast 3 d
+ where
+  l1 = drop 3 a
+  l2 = dropLast 1 . drop 2 $ b
+  l3 = dropLast 2 . drop 1 $ c
+  l4 = dropLast 3 d
 
-    diagCount = countColumns [l1, l2, l3, l4]
+  diagCount = countColumns [l1, l2, l3, l4]
 
 countDiagonalL :: [String] -> [Int]
 countDiagonalL [] = []
@@ -98,19 +98,17 @@ countDiagonalL [_] = []
 countDiagonalL [_, _] = []
 countDiagonalL [_, _, _] = []
 countDiagonalL xs@(a : b : c : d : _) = diagCount : countDiagonalL (tail xs)
-  where
-    l1 = dropLast 3 a
-    l2 = dropLast 2 . drop 1 $ b
-    l3 = dropLast 1 . drop 2 $ c
-    l4 = drop 3 d
+ where
+  l1 = dropLast 3 a
+  l2 = dropLast 2 . drop 1 $ b
+  l3 = dropLast 1 . drop 2 $ c
+  l4 = drop 3 d
 
-    diagCount = countColumns [l1, l2, l3, l4]
--- $ trace (show $ unlines [l1, l2, l3, l4]) [l1, l2, l3, l4]
+  diagCount = countColumns [l1, l2, l3, l4]
 
 dropLast :: Int -> [a] -> [a]
 dropLast n = reverse . drop n . reverse
 
--- >>>
 countXmas :: String -> Int
 countXmas l = length (splitOn "XMAS" l) - 1
 
@@ -162,22 +160,22 @@ rollWindow [] = []
 rollWindow [_] = []
 rollWindow [_, _] = []
 rollWindow xs@(a : b : c : _) = length (filter isMas triples) : rollWindow (tail xs)
-  where
-    triples = zip3 (windows a) (windows b) (windows c)
-    windows s = zip3 s (drop 1 s) (drop 2 s)
+ where
+  triples = zip3 (windows a) (windows b) (windows c)
+  windows s = zip3 s (drop 1 s) (drop 2 s)
 
 type Triple = (Char, Char, Char)
 
 isMas :: (Triple, Triple, Triple) -> Bool
 isMas ((a1, _, c1), (_, b2, _), (a3, _, c3)) = isValid s1 && isValid s2
-  where
-    s1 = [a1, b2, c3]
-    s2 = [c1, b2, a3]
+ where
+  s1 = [a1, b2, c3]
+  s2 = [c1, b2, a3]
 
-    isValid s = s == "MAS" || s == "SAM"
+  isValid s = s == "MAS" || s == "SAM"
 
 solve :: IO ()
 solve = do
-    content <- readFile "./src/Year2024/data/day04.txt"
-    print $ "Part1 solution: " ++ show (part1 content)
-    print $ "Part2 solution: " ++ show (part2 content)
+  content <- readFile "./src/Year2024/data/day04.txt"
+  print $ "Part1 solution: " ++ show (part1 content)
+  print $ "Part2 solution: " ++ show (part2 content)
