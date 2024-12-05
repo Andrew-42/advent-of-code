@@ -49,6 +49,11 @@ countIf p = length . filter p
 dropLast :: Int -> [a] -> [a]
 dropLast n = reverse . drop n . reverse
 
+-- >>> takeLast 3 "abcdef"
+-- "def"
+takeLast :: Int -> [a] -> [a]
+takeLast n = reverse . take n . reverse
+
 -- >>> windowed 3 sum [1, 2, 1, 1, 1]
 -- [4,4,3,2,1]
 windowed :: Int -> ([a] -> b) -> [a] -> [b]
