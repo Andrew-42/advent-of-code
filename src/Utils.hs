@@ -29,13 +29,29 @@ rstrip = reverse . lstrip . reverse
 strip :: [Char] -> String
 strip = lstrip . rstrip
 
+replace :: Char -> Char -> String -> String
+replace p r = map (\c -> if p == c then r else c)
+
 -- LIST
 
--- >>> 2 `itemOf` [75,47,61,53,29]
+-- >>> 2 `itemAt` [75,47,61,53,29]
+-- >>> 4 `itemAt` [75,47,61,53,29]
 -- Just 61
-itemOf :: Int -> [a] -> Maybe a
-itemOf _ [] = Nothing
-itemOf n xs = if (0 < n) && (n < length xs - 1) then Just (xs !! n) else Nothing
+-- Just 29
+itemAt :: Int -> [a] -> Maybe a
+itemAt _ [] = Nothing
+itemAt n xs = if (0 <= n) && (n < length xs) then Just (xs !! n) else Nothing
+
+-- >>> setItemAt 2 2 [75,47,61,53,29]
+-- >>> setItemAt 4 2 [75,47,61,53,29]
+-- Just [75,47,2,53,29]
+-- Just [75,47,61,53,2]
+setItemAt :: Int -> a -> [a] -> Maybe [a]
+setItemAt _ _ [] = Nothing
+setItemAt n v xs =
+    if (0 <= n) && (n < length xs)
+        then Just (take n xs ++ [v] ++ drop (n + 1) xs)
+        else Nothing
 
 {- | Count elements passing predicate in list
 >>> countIf (== 'b') "abcdeabcfgh"

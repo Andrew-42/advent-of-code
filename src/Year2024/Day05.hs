@@ -129,25 +129,25 @@ Example should be 143:
 -}
 part1 :: String -> Int
 part1 i =
-  sum
-    . map getMiddle
-    . filter (checkProtocol man)
-    . map reverse
-    $ protocols
- where
-  (man, protocols) = pInput i
+    sum
+        . map getMiddle
+        . filter (checkProtocol man)
+        . map reverse
+        $ protocols
+  where
+    (man, protocols) = pInput i
 
 manual :: [(Int, Int)] -> IM.IntMap (S.Set Int)
 manual = foldr add IM.empty
- where
-  add (key, val) = IM.insertWith S.union key (S.singleton val)
+  where
+    add (key, val) = IM.insertWith S.union key (S.singleton val)
 
 checkProtocol :: IM.IntMap (S.Set Int) -> [Int] -> Bool
 checkProtocol _ [] = True
 checkProtocol m (x : xs) = isValid xs && checkProtocol m xs
- where
-  forbidPages = fromMaybe S.empty (IM.lookup x m)
-  isValid = all (\v -> not $ S.member v forbidPages)
+  where
+    forbidPages = fromMaybe S.empty (IM.lookup x m)
+    isValid = all (\v -> not $ S.member v forbidPages)
 
 -- >>> getMiddle [75,47,61,53,29]
 -- 61
@@ -188,13 +188,13 @@ Example should be 123:
 -}
 part2 :: String -> Int
 part2 i =
-  sum
-    . map (getMiddle . correctProtocol man)
-    . filter (not . checkProtocol man)
-    . map reverse
-    $ protocols
- where
-  (man, protocols) = pInput i
+    sum
+        . map (getMiddle . correctProtocol man)
+        . filter (not . checkProtocol man)
+        . map reverse
+        $ protocols
+  where
+    (man, protocols) = pInput i
 
 -- >>> let example = "47|53\n97|13\n97|61\n97|47\n75|29\n61|13\n75|53\n29|13\n97|29\n53|29\n61|53\n97|53\n61|29\n47|13\n75|47\n97|75\n47|61\n75|61\n47|29\n75|13\n53|13\n\n75,47,61,53,29\n97,61,53,29,13\n75,29,13\n75,97,47,61,53\n61,13,29\n97,13,75,29,47\n"
 -- >>> (man, protocols) = pInput example
@@ -203,26 +203,26 @@ part2 i =
 correctProtocol :: IM.IntMap (S.Set Int) -> [Int] -> [Int]
 correctProtocol _ [] = []
 correctProtocol m (x : xs) =
-  if isValid xs
-    then x : correctProtocol m xs
-    else correctProtocol m (t ++ [x] ++ i)
- where
-  forbidPages = fromMaybe S.empty (IM.lookup x m)
-  isValid = all (\v -> not $ S.member v forbidPages)
-  i = takeWhile (\v -> not $ S.member v forbidPages) . reverse $ xs
-  t = reverse . dropWhile (\v -> not $ S.member v forbidPages) . reverse $ xs
+    if isValid xs
+        then x : correctProtocol m xs
+        else correctProtocol m (t ++ [x] ++ i)
+  where
+    forbidPages = fromMaybe S.empty (IM.lookup x m)
+    isValid = all (\v -> not $ S.member v forbidPages)
+    i = takeWhile (\v -> not $ S.member v forbidPages) . reverse $ xs
+    t = reverse . dropWhile (\v -> not $ S.member v forbidPages) . reverse $ xs
 
 pInput :: String -> (IM.IntMap (S.Set Int), [[Int]])
 pInput s = (man, pages)
- where
-  [a, b] = splitOn [""] . lines $ s
-  man = manual $ map ((\xs -> (head xs, last xs)) . map pInt . splitOn "|") a
-  pages = map (map pInt . splitOn ",") b
-  pInt :: String -> Int
-  pInt = read
+  where
+    [a, b] = splitOn [""] . lines $ s
+    man = manual $ map ((\xs -> (head xs, last xs)) . map pInt . splitOn "|") a
+    pages = map (map pInt . splitOn ",") b
+    pInt :: String -> Int
+    pInt = read
 
 solve :: IO ()
 solve = do
-  content <- readFile "./src/Year2024/data/day05.txt"
-  print $ "Part1 solution: " ++ show (part1 content)
-  print $ "Part2 solution: " ++ show (part2 content)
+    content <- readFile "./src/Year2024/data/day05.txt"
+    print $ "Part1 solution: " ++ show (part1 content)
+    print $ "Part2 solution: " ++ show (part2 content)
