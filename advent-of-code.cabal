@@ -15,6 +15,7 @@ library
     hs-source-dirs:   src
     exposed-modules:
         Utils
+        Grid
         Year2023.Day01
         Year2023.Day02
         Year2023.Day03
