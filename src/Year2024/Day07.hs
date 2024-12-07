@@ -148,9 +148,8 @@ part2 =
 concatOp :: Int -> Int -> Int
 concatOp a b = read (show a ++ show b)
 
--- >>> let example = "190: 10 19\n3267: 81 40 27\n83: 17 5\n156: 15 6"
--- >>> pInput example
--- [Equation 190 [10,19],Equation 3267 [81,40,27],Equation 83 [17,5],Equation 156 [15,6]]
+-- >>> pInput "190: 10 19\n3267: 81 40 27\n83: 17 5"
+-- [Equation 190 [10,19],Equation 3267 [81,40,27],Equation 83 [17,5]]
 pInput :: String -> [Equation]
 pInput = map pEquation . lines
 
