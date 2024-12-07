@@ -83,6 +83,18 @@ windowed n f xs = f (take n xs) : windowed n f (tail xs)
 zipWithNext :: [a] -> [(a, a)]
 zipWithNext xs = zip xs $ tail xs
 
+{- | Create all possible combinations of length n from list xs
+
+>>> combinations 3 [1,2] [[]]
+[[1,1,1],[2,1,1],[1,2,1],[2,2,1],[1,1,2],[2,1,2],[1,2,2],[2,2,2]]
+-}
+combinations :: Int -> [a] -> [[a]] -> [[a]]
+combinations _ [] _ = []
+combinations 0 _ cs = cs
+combinations n xs cs = combinations (n - 1) xs newCs
+  where
+    newCs = concatMap (\l -> map (: l) xs) cs
+
 -- Matrix
 
 {- | Matrix transpose
