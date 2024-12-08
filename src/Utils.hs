@@ -1,3 +1,5 @@
+{-# LANGUAGE TupleSections #-}
+
 module Utils where
 
 import qualified Data.Map as M
@@ -82,6 +84,13 @@ windowed n f xs = f (take n xs) : windowed n f (tail xs)
 -}
 zipWithNext :: [a] -> [(a, a)]
 zipWithNext xs = zip xs $ tail xs
+
+-- >>> pairs [1, 2, 3]
+-- [(1,2),(1,3),(2,3)]
+pairs :: [a] -> [(a, a)]
+pairs [] = []
+pairs [_] = []
+pairs (x : xs) = map (x,) xs ++ pairs xs
 
 {- | Create all possible combinations of length n from list xs
 

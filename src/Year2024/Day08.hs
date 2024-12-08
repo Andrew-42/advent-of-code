@@ -138,7 +138,7 @@ positionsOf c g =
     , G.gridAt (G.Position x y) g == Just c
     ]
   where
-    (dimX, dimY) = G.shape g
+    G.Shape dimX dimY = G.shape g
 
 -- >>> pairs [G.Position 4 4,G.Position 5 2,G.Position 7 3]
 -- [(Position 4 4,Position 5 2),(Position 4 4,Position 7 3),(Position 5 2,Position 7 3)]
@@ -159,7 +159,7 @@ antinodes (G.Position x1 y1) (G.Position x2 y2) =
 isInGrid :: G.Position -> G.Grid2D a -> Bool
 isInGrid (G.Position x y) g = (0 <= x && x < dimX) && (0 <= y && y < dimY)
   where
-    (dimX, dimY) = G.shape g
+    G.Shape dimX dimY = G.shape g
 
 isInDims :: G.Position -> (Int, Int) -> Bool
 isInDims (G.Position x y) (dimX, dimY) =
@@ -235,8 +235,8 @@ part2 s =
 
 -- >>> harmonicAntinodes (12, 12) (G.Position 5 2) (G.Position 7 3)
 -- [Position 7 3,Position 9 4,Position 11 5,Position 5 2,Position 3 1,Position 1 0]
-harmonicAntinodes :: (Int, Int) -> G.Position -> G.Position -> [G.Position]
-harmonicAntinodes (dimX, dimY) (G.Position x1 y1) (G.Position x2 y2) =
+harmonicAntinodes :: G.Shape -> G.Position -> G.Position -> [G.Position]
+harmonicAntinodes (G.Shape dimX dimY) (G.Position x1 y1) (G.Position x2 y2) =
     positionsMinus 0 ++ positionsPlus 0
   where
     dx = x1 - x2
