@@ -3,7 +3,6 @@
 module Utils where
 
 import qualified Data.Map as M
-import qualified Data.Set as S
 
 -- STRING
 
@@ -115,11 +114,6 @@ We expect all the lists to have the same length
 transpose :: [[a]] -> [[a]]
 transpose ([] : _) = []
 transpose xs = map head xs : transpose (map tail xs)
-
--- SET
-
-toSet :: (Ord a) => [a] -> S.Set a
-toSet = S.fromList
 
 -- MAP
 

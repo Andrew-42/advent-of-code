@@ -67,10 +67,14 @@ test-suite test
     import:           warnings
     type:             exitcode-stdio-1.0
     main-is:          Tests.hs
-    other-modules:    GridSpec
+    other-modules:
+        GridSpec
+        UtilsSpec
+
     build-depends:
         , advent-of-code
         , base            ^>=4.17.2.1
+        , containers
         , hspec
         , QuickCheck
 
