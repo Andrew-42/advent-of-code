@@ -56,9 +56,14 @@ library
 executable advent-of-code
     import:           warnings
     main-is:          Main.hs
+    other-modules:    Api
     build-depends:
         , advent-of-code
         , base            ^>=4.17.2.1
+        , dotenv
+        , lens
+        , text
+        , wreq
 
     hs-source-dirs:   app
     default-language: Haskell2010
