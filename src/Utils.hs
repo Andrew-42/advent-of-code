@@ -71,6 +71,12 @@ dropLast n = reverse . drop n . reverse
 takeLast :: Int -> [a] -> [a]
 takeLast n = reverse . take n . reverse
 
+-- >>> removeItem 'd' "abdcdef"
+-- "abcef"
+removeItem :: (Eq a) => a -> [a] -> [a]
+removeItem _ [] = []
+removeItem x (y : ys) = if x == y then removeItem x ys else y : removeItem x ys
+
 -- >>> windowed 3 sum [1, 2, 1, 1, 1]
 -- [4,4,3,2,1]
 windowed :: Int -> ([a] -> b) -> [a] -> [b]
