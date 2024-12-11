@@ -56,13 +56,17 @@ library
 executable advent-of-code
     import:           warnings
     main-is:          Main.hs
-    other-modules:    Api
+    other-modules:
+        Api
+        Cli
+
     build-depends:
         , advent-of-code
-        , base            ^>=4.17.2.1
+        , base                  ^>=4.17.2.1
         , bytestring
         , dotenv
         , lens
+        , optparse-applicative
         , tagsoup
         , text
         , wreq
