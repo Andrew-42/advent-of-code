@@ -67,3 +67,33 @@ isInGrid (Position x y) (Shape dimX dimY) =
 -- 2
 countValues :: (Eq a) => a -> Grid2D a -> Int
 countValues v (Grid2D rs) = length $ concatMap (filter (== v)) rs
+
+-- >>> directNeighbors (Position 1 1)
+-- [Position 0 1,Position 2 1,Position 1 0,Position 1 2]
+directNeighbors :: Position -> [Position]
+directNeighbors (Position x y) =
+    [ Position (x - 1) y
+    , Position (x + 1) y
+    , Position x (y - 1)
+    , Position x (y + 1)
+    ]
+
+-- >>> diagNeighbors (Position 1 1)
+-- [Position 0 0,Position 2 0,Position 0 2,Position 2 2]
+diagNeighbors :: Position -> [Position]
+diagNeighbors (Position x y) =
+    [ Position (x - 1) (y - 1)
+    , Position (x + 1) (y - 1)
+    , Position (x - 1) (y + 1)
+    , Position (x + 1) (y + 1)
+    ]
+
+neighbors :: Position -> [Position]
+neighbors = (++) <$> directNeighbors <*> diagNeighbors
+
+-- >>> equals 4 (Position 1 1) (Grid2D [[1,2],[2,4]])
+-- True
+equals :: (Eq a) => a -> Position -> Grid2D a -> Bool
+equals v p g = case gridAt p g of
+    Just x -> x == v
+    Nothing -> False

@@ -60,8 +60,10 @@ executable advent-of-code
     build-depends:
         , advent-of-code
         , base            ^>=4.17.2.1
+        , bytestring
         , dotenv
         , lens
+        , tagsoup
         , text
         , wreq
 

@@ -1,6 +1,8 @@
 module Main where
 
-import Year2024.Day11 (solve)
+import Api (fetchData)
+import Year2024.Day12 (solve)
 
 main :: IO ()
-main = solve
+-- main = solve
+main = fetchData

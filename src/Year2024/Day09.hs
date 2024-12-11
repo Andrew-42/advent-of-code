@@ -115,7 +115,7 @@ toMemoryBlock s = toBlock s 0
             ++ toBlock rest (fileId + 1)
 
 fileBlock :: Int -> Int -> [String]
-fileBlock len fileId = replicate len . show $ fileId
+fileBlock len = replicate len . show
 
 spaceBlock :: Int -> [String]
 spaceBlock 0 = []
