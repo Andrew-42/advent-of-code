@@ -24,10 +24,15 @@ import Options.Applicative (
     subparser,
  )
 
-data Command = Calendar CalendarOptions | Puzzle PuzzleOptions
+data Type = Calendar | Puzzle
 
-data CalendarOptions = CalendarOptions {calendarYear :: Int}
-data PuzzleOptions = PuzzleOptions {puzzleYear :: Int}
+data Options (t :: Type) where
+    CalendarO :: {cYear :: Int} -> Options 'Calendar
+    PuzzleO :: {pYear :: Int} -> Options 'Puzzle
+
+data Command where
+    CalendarC :: Options 'Calendar -> Command
+    PuzzleC :: Options 'Puzzle -> Command
 
 progParser :: ParserInfo Command
 progParser =
@@ -41,14 +46,14 @@ progParser =
 commandParser :: Parser Command
 commandParser =
     subparser
-        ( command "calendar" (Calendar <$> calendarOptions)
-            <> command "puzzle" (Puzzle <$> puzzleOptions)
+        ( command "calendar" (CalendarC <$> calendarOptions)
+            <> command "puzzle" (PuzzleC <$> puzzleOptions)
         )
 
-calendarOptions :: ParserInfo CalendarOptions
+calendarOptions :: ParserInfo (Options 'Calendar)
 calendarOptions =
     info
-        (CalendarOptions <$> yearParser <**> helper)
+        (CalendarO <$> yearParser <**> helper)
         calendarDescription
 
 calendarDescription :: InfoMod a
@@ -56,8 +61,8 @@ calendarDescription =
     fullDesc
         <> progDesc "Show Advent of Code calendar"
 
-puzzleOptions :: ParserInfo PuzzleOptions
-puzzleOptions = info (PuzzleOptions <$> yearParser <**> helper) puzzleDescription
+puzzleOptions :: ParserInfo (Options 'Puzzle)
+puzzleOptions = info (PuzzleO <$> yearParser <**> helper) puzzleDescription
 
 puzzleDescription :: InfoMod a
 puzzleDescription = fullDesc <> progDesc "Show Advent of Code puzzle"
