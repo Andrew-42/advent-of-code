@@ -1,5 +1,6 @@
 module Grid where
 
+import Control.Monad (foldM)
 import Data.List (elemIndex, findIndex)
 import qualified Utils as U
 
@@ -35,6 +36,9 @@ setGridAt v (Position x y) (Grid2D m) = do
     newRow <- U.setItemAt x v row
     newGrid <- U.setItemAt y newRow m
     return $ Grid2D newGrid
+
+setAllGridAt :: a -> [Position] -> Grid2D a -> Maybe (Grid2D a)
+setAllGridAt v ps g = foldM (flip (setGridAt v)) g ps
 
 -- >>> positionOf 2 $ Grid2D [[1,2],[3,4]]
 -- Just (Position 1 0)
