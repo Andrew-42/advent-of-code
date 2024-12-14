@@ -57,6 +57,10 @@ positionsOf c g =
   where
     Shape dimX dimY = shape g
 
+allPositions :: Shape -> [Position]
+allPositions (Shape dimX dimY) =
+    [Position x y | x <- [0 .. dimX], y <- [0 .. dimY]]
+
 -- >>> isInGrid (Position 1 3) (Shape 2 5)
 -- True
 isInGrid :: Position -> Shape -> Bool
@@ -90,6 +94,12 @@ diagNeighbors (Position x y) =
 
 neighbors :: Position -> [Position]
 neighbors = (++) <$> directNeighbors <*> diagNeighbors
+
+areDirectNeighbors :: Position -> Position -> Bool
+areDirectNeighbors (Position x1 y1) (Position x2 y2)
+    | y1 == y2 = abs (x1 - x2) == 1
+    | x1 == x2 = abs (y1 - y2) == 1
+    | otherwise = False
 
 -- >>> equals 4 (Position 1 1) (Grid2D [[1,2],[2,4]])
 -- True
