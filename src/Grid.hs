@@ -10,6 +10,8 @@ data Position = Position Int Int deriving (Show, Eq, Ord)
 
 data Shape = Shape Int Int deriving (Show, Eq, Ord)
 
+data Direction = North | East | South | West deriving (Show, Eq)
+
 printGrid :: (Show a) => Grid2D a -> IO ()
 printGrid (Grid2D g) = mapM_ print g
 
@@ -111,3 +113,9 @@ equals :: (Eq a) => a -> Position -> Grid2D a -> Bool
 equals v p g = case gridAt p g of
     Just x -> x == v
     Nothing -> False
+
+next :: Position -> Direction -> Position
+next (Position x y) North = Position x (y + 1)
+next (Position x y) East = Position (x + 1) y
+next (Position x y) South = Position x (y - 1)
+next (Position x y) West = Position (x - 1) y
