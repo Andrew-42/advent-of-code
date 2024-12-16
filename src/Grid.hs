@@ -10,7 +10,7 @@ data Position = Position Int Int deriving (Show, Eq, Ord)
 
 data Shape = Shape Int Int deriving (Show, Eq, Ord)
 
-data Direction = North | East | South | West deriving (Show, Eq)
+data Direction = North | East | South | West deriving (Show, Eq, Ord)
 
 printGrid :: (Show a) => Grid2D a -> IO ()
 printGrid (Grid2D g) = mapM_ print g
@@ -119,3 +119,15 @@ next (Position x y) North = Position x (y + 1)
 next (Position x y) East = Position (x + 1) y
 next (Position x y) South = Position x (y - 1)
 next (Position x y) West = Position (x - 1) y
+
+turnRight :: Direction -> Direction
+turnRight North = East
+turnRight East = South
+turnRight South = West
+turnRight West = North
+
+turnLeft :: Direction -> Direction
+turnLeft North = West
+turnLeft West = South
+turnLeft South = East
+turnLeft East = North
