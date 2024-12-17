@@ -131,3 +131,6 @@ turnLeft North = West
 turnLeft West = South
 turnLeft South = East
 turnLeft East = North
+
+zeros :: Shape -> Grid2D Int
+zeros (Shape dimX dimY) = Grid2D . replicate dimY . replicate dimX $ 0
