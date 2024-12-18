@@ -7,6 +7,7 @@ module Year2024.Day17 (solve) where
 import Data.Bits (Bits (xor))
 import Data.Char (digitToInt)
 import Data.List.Split (chunk)
+import Debug.Trace (trace)
 import Utils (itemAt)
 
 {- | Part 1
@@ -19,14 +20,14 @@ Example:
 >>> part1 example1
 >>> part1 example2
 >>> part1 exampleF
-Just (Program (A: 0,B: 1,C: 9) (InstructionPointer 1) [InstructionCombo Code2 6] (Output []))
-Just (Program (A: 10,B: 0,C: 0) (InstructionPointer 3) [InstructionCombo Code5 0,InstructionCombo Code5 1,InstructionCombo Code5 4] (Output [0,1,2]))
-Just (Program (A: 0,B: 0,C: 0) (InstructionPointer 3) [InstructionCombo Code0 1,InstructionCombo Code5 4,InstructionCombo Code3 0] (Output [4,6,3,5,6,3,5,2,1,0]))
+Just []
+Just [0,1,2]
+Just [4,6,3,5,6,3,5,2,1,0]
 -}
-part1 :: String -> Maybe Program
+part1 :: String -> Maybe [Int]
 part1 s = do
     prg <- pInput s
-    return $ runProgram prg
+    return $ getOuput $ runProgram prg
 
 data Program
     = Program
@@ -118,38 +119,38 @@ cdv co (RegA v) = RegC (v `div` (2 ^ co))
 
 {- | Part 2
 
-Example:
+Example should be 117440:
 
->>> let exampleS = "Register A: 117440\nRegister B: 0\nRegister C: 0\n\nProgram: 0,3,5,4,3,0"
 >>> let example = "Register A: 2024\nRegister B: 0\nRegister C: 0\n\nProgram: 0,3,5,4,3,0"
->>> part2 example
-Just (Program (A: 253,B: 0,C: 0) (InstructionPointer 1) [InstructionCombo Code0 3,InstructionCombo Code5 4,InstructionCombo Code3 0] (Output []))
+>>> part2 example [0,3,5,4,3,0]
+Just (A: 117440,Program (A: 0,B: 0,C: 0) (InstructionPointer 2) [InstructionCombo Code0 3,InstructionCombo Code5 4,InstructionCombo Code3 0] (Output [0,3,5,4,3,0]))
 -}
-part2 :: String -> Maybe Program
-part2 s = do
+part2 :: String -> [Int] -> Maybe (Register 'A, Program)
+part2 s sol = do
     prg <- pInput s
-    let solPrg = searchRegA 0 prg
-    return solPrg
+    let (regA, solPrg) = searchRegA 0 sol prg
+    return (regA, solPrg)
 
-searchRegA :: Int -> Program -> Program
-searchRegA rA prg = case runProgram' prg of
-    Just sol -> sol
-    Nothing -> searchRegA (rA + 1) (regAProgramCopy (rA + 1) prg)
+searchRegA :: Int -> [Int] -> Program -> (Register 'A, Program)
+searchRegA rA solution prg = case runProgram' prg of
+    Just sol -> (getRegA prg, sol)
+    Nothing -> searchRegA (rA + 1) solution (regAProgramCopy (rA + 1) prg)
   where
-    baseOut = getOuput prg
-
     runProgram' prg' = case programStep prg' of
         Just nprg@(Program _ _ _ (Output output)) ->
-            if output == baseOut
+            if output == solution
                 then Just nprg
                 else
-                    if continue output baseOut
+                    if continue output solution
                         then runProgram' nprg
                         else Nothing
         Nothing -> Nothing
 
 continue :: [Int] -> [Int] -> Bool
 continue o1 o2 = o1 == take (length o1) o2
+
+getRegA :: Program -> Register 'A
+getRegA (Program (regA, _, _) _ _ _) = regA
 
 getOuput :: Program -> [Int]
 getOuput (Program _ _ _ (Output output)) = output
@@ -188,10 +189,7 @@ parseIC (oc, co) = case oc of
 
 solve :: IO ()
 solve = do
-    -- example <- readFile "./src/Year2024/data/day17-example.txt"
-    -- print $ "Part1 example: " ++ show (part1 example)
-    -- print $ "Part2 example: " ++ show (part2 example)
-
     content <- readFile "./src/Year2024/data/day17.txt"
     print $ "Part1 solution: " ++ show (part1 content)
-    print $ "Part2 solution: " ++ show (part2 content)
+    let solution = [2, 4, 1, 2, 7, 5, 1, 3, 4, 4, 5, 5, 0, 3, 3, 0]
+    print $ "Part2 solution: " ++ show (part2 content solution)
