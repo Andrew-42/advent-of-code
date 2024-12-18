@@ -114,6 +114,9 @@ equals v p g = case gridAt p g of
     Just x -> x == v
     Nothing -> False
 
+compareG :: (a -> Bool) -> Position -> Grid2D a -> Bool
+compareG predicate p g = maybe False predicate (gridAt p g)
+
 next :: Position -> Direction -> Position
 next (Position x y) North = Position x (y + 1)
 next (Position x y) East = Position (x + 1) y
@@ -132,5 +135,8 @@ turnLeft West = South
 turnLeft South = East
 turnLeft East = North
 
+mkGrid :: a -> Shape -> Grid2D a
+mkGrid v (Shape dimX dimY) = Grid2D . replicate dimY . replicate dimX $ v
+
 zeros :: Shape -> Grid2D Int
-zeros (Shape dimX dimY) = Grid2D . replicate dimY . replicate dimX $ 0
+zeros = mkGrid 0

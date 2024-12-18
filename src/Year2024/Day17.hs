@@ -128,7 +128,7 @@ Just (A: 117440,Program (A: 0,B: 0,C: 0) (InstructionPointer 2) [InstructionComb
 part2 :: String -> [Int] -> Maybe (Register 'A, Program)
 part2 s sol = do
     prg <- pInput s
-    let (regA, solPrg) = searchRegA 0 sol prg
+    let (regA, solPrg) = searchRegA 48744869 sol prg
     return (regA, solPrg)
 
 searchRegA :: Int -> [Int] -> Program -> (Register 'A, Program)
@@ -142,7 +142,7 @@ searchRegA rA solution prg = case runProgram' prg of
                 then Just nprg
                 else
                     if continue output solution
-                        then runProgram' nprg
+                        then trace (show rA ++ " - " ++ show output) $ runProgram' nprg
                         else Nothing
         Nothing -> Nothing
 
