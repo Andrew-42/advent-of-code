@@ -75,7 +75,13 @@ takeLast n = reverse . take n . reverse
 -- "abcef"
 removeItem :: (Eq a) => a -> [a] -> [a]
 removeItem _ [] = []
-removeItem x (y : ys) = if x == y then removeItem x ys else y : removeItem x ys
+removeItem x ys = [y | y <- ys, y /= x]
+
+-- >>> removeFirst 'd' "abdcdef"
+-- "abcdef"
+removeFirst :: (Eq a) => a -> [a] -> [a]
+removeFirst _ [] = []
+removeFirst x (y : ys) = if x == y then ys else y : removeFirst x ys
 
 -- >>> windowed 3 sum [1, 2, 1, 1, 1]
 -- [4,4,3,2,1]
