@@ -1,8 +1,7 @@
 module Year2024.Day19 (solve) where
 
-import Data.List (isPrefixOf)
+import Data.List (isPrefixOf, sortBy)
 import Data.List.Split (splitOn)
-import Debug.Trace (trace)
 import Utils (strip)
 
 {- | Part 1
@@ -14,9 +13,22 @@ Example:
 6
 -}
 part1 :: String -> Int
-part1 s = length . filter (\p -> trace (show p) $ p `isPossible` towels) $ patterns
+part1 s = length . filter (`isPossible` fTowels) $ patterns
   where
     (towels, patterns) = pInput s
+    fTowels =
+        filterTowels []
+            . sortBy (\a b -> compare (length a) (length b))
+            $ towels
+
+-- >>> filterTowels [] ["r","wr","b","g","bwu","rb","gb","br"]
+-- ["bwu","g","b","wr","r"]
+filterTowels :: [String] -> [String] -> [String]
+filterTowels rts [] = rts
+filterTowels rts (t : ts) =
+    if isPossible (Pattern t) rts
+        then filterTowels rts ts
+        else filterTowels (t : rts) ts
 
 newtype Pattern = Pattern String deriving (Show, Eq)
 
@@ -27,6 +39,7 @@ newtype Pattern = Pattern String deriving (Show, Eq)
 -- False
 -- True
 isPossible :: Pattern -> [String] -> Bool
+isPossible _ [] = False
 isPossible (Pattern "") _ = True
 isPossible (Pattern p) ts =
     any (\t -> isPossible (newPattern t) ts) $
