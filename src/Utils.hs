@@ -115,6 +115,16 @@ combinations n xs cs = combinations (n - 1) xs newCs
   where
     newCs = concatMap (\l -> map (: l) xs) cs
 
+-- >>> indexed "abcd"
+-- [(0,'a'),(1,'b'),(2,'c'),(3,'d')]
+indexed :: [a] -> [(Int, a)]
+indexed = zip [0 ..]
+
+-- >>> indexed1 "abcd"
+-- [(1,'a'),(2,'b'),(3,'c'),(4,'d')]
+indexed1 :: [a] -> [(Int, a)]
+indexed1 = zip [1 ..]
+
 -- Matrix
 
 {- | Matrix transpose

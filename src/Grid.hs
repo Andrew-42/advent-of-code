@@ -140,3 +140,7 @@ mkGrid v (Shape dimX dimY) = Grid2D . replicate dimY . replicate dimX $ v
 
 zeros :: Shape -> Grid2D Int
 zeros = mkGrid 0
+
+manhattanDistance :: Position -> Position -> Int
+manhattanDistance (Position x1 y1) (Position x2 y2) =
+    abs (x1 - x2) + abs (y1 - y2)
