@@ -1,14 +1,47 @@
 module Year2024.Day22 (solve) where
 
+import Data.Bits (xor)
+
 {- | Part 1
 
-Example:
+Example should be 37327623:
 
->>> let example = ""
+>>> let example = "1\n10\n100\n2024"
 >>> part1 example
+37327623
 -}
 part1 :: String -> Int
-part1 = undefined
+part1 = sum . map (nthSecret 2000 . read) . lines
+
+-- >>> nthSecret 10 123
+-- 5908254
+nthSecret :: Int -> Int -> Int
+nthSecret 0 seed = seed
+nthSecret n seed = nthSecret (n - 1) (nextSecret seed)
+
+-- >>> nextSecret 123
+-- 15887950
+nextSecret :: Int -> Int
+nextSecret = step3 . step2 . step1
+
+step1 :: Int -> Int
+step1 s = prune . mix s $ s * 64
+
+step2 :: Int -> Int
+step2 s = prune . mix s $ s `div` 32
+
+step3 :: Int -> Int
+step3 s = prune . mix s $ s * 2048
+
+-- >>> mix 42 15
+-- 37
+mix :: Int -> Int -> Int
+mix s x = s `xor` x
+
+-- >>> prune 100000000
+-- 16113920
+prune :: Int -> Int
+prune s = s `mod` 16777216
 
 {- | Part 2
 
