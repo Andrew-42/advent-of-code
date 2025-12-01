@@ -1,0 +1,81 @@
+name:                advent-of-code
+version:             0.1.0.0
+github:              "githubuser/advent-of-code"
+license:             MIT
+author:              "ondrej.hlavacka"
+maintainer:          "o.hlavacka@seznam.cz"
+copyright:           "2025 Ondřej Hlavačka"
+
+extra-source-files:
+- README.md
+- CHANGELOG.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/advent-of-code#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- containers
+- MemoTrie
+- split
+- text
+- bytestring
+- dotenv
+- lens
+- optparse-applicative
+- tagsoup
+- text
+- wreq
+
+ghc-options:
+- -Wall
+- -Wcompat
+- -Widentities
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wmissing-home-modules
+- -Wredundant-constraints
+- -Wno-missing-export-lists
+- -Wno-partial-fields
+
+default-extensions:
+- OverloadedStrings
+- OverloadedRecordDot
+- DuplicateRecordFields
+- InstanceSigs
+
+library:
+  source-dirs: src
+  ghc-options:
+    - -XTemplateHaskell
+
+executables:
+  advent-of-code-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -O2
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - advent-of-code
+
+tests:
+  advent-of-code-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - advent-of-code
+    - hspec
+    - QuickCheck

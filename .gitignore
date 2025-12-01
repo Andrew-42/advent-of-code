@@ -1,5 +1,6 @@
 # haskell build files
 /dist-newstyle/**
+/.stack-work/**
 
 # Environment variables
 **/.env**

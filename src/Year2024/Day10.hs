@@ -115,7 +115,7 @@ part1 s = sum . map (`trailScores` grid) . positionsOf '0' $ grid
     grid = Grid2D . lines $ s
 
 trailScores :: Position -> Grid2D Char -> Int
-trailScores p g = length $ foldl' getNext (S.singleton p) "123456789"
+trailScores p g = length $ foldl' getNext (S.singleton p) ("123456789" :: String)
   where
     getNext :: (Foldable t) => t Position -> Char -> S.Set Position
     getNext ps' v =
@@ -204,7 +204,7 @@ part2 s = sum . map (`trailScores'` grid) . positionsOf '0' $ grid
     grid = Grid2D . lines $ s
 
 trailScores' :: Position -> Grid2D Char -> Int
-trailScores' p g = length $ foldl' getNext [p] "123456789"
+trailScores' p g = length $ foldl' getNext [p] ("123456789" :: String)
   where
     getNext ps' v =
         concatMap (filter (\p' -> equals v p' g) . directNeighbors) ps'

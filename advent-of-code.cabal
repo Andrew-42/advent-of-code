@@ -1,95 +1,146 @@
-cabal-version:   3.0
-name:            advent-of-code
-version:         0.1.0.0
-license:
-author:          ondrej.hlavacka
-maintainer:      o.hlavacka@seznam.cz
-build-type:      Simple
-extra-doc-files: CHANGELOG.md
+cabal-version: 1.12
 
-common warnings
-    ghc-options: -Wall
+-- This file has been generated from package.yaml by hpack version 0.37.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           advent-of-code
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/advent-of-code#readme>
+homepage:       https://github.com/githubuser/advent-of-code#readme
+bug-reports:    https://github.com/githubuser/advent-of-code/issues
+author:         ondrej.hlavacka
+maintainer:     o.hlavacka@seznam.cz
+copyright:      2025 Ondřej Hlavačka
+license:        MIT
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/advent-of-code
 
 library
-    import:           warnings
-    hs-source-dirs:   src
-    exposed-modules:
-        Grid
-        Search
-        Utils
-        Year2023.Day01
-        Year2023.Day02
-        Year2023.Day03
-        Year2024.Day01
-        Year2024.Day02
-        Year2024.Day03
-        Year2024.Day04
-        Year2024.Day05
-        Year2024.Day06
-        Year2024.Day07
-        Year2024.Day08
-        Year2024.Day09
-        Year2024.Day10
-        Year2024.Day11
-        Year2024.Day12
-        Year2024.Day13
-        Year2024.Day14
-        Year2024.Day15
-        Year2024.Day16
-        Year2024.Day17
-        Year2024.Day18
-        Year2024.Day19
-        Year2024.Day20
-        Year2024.Day21
-        Year2024.Day22
-        Year2024.Day23
-        Year2024.Day24
-        Year2024.Day25
+  exposed-modules:
+      Grid
+      Search
+      Utils
+      Year2023.Day01
+      Year2023.Day02
+      Year2023.Day03
+      Year2024.Day01
+      Year2024.Day02
+      Year2024.Day03
+      Year2024.Day04
+      Year2024.Day05
+      Year2024.Day06
+      Year2024.Day07
+      Year2024.Day08
+      Year2024.Day09
+      Year2024.Day10
+      Year2024.Day11
+      Year2024.Day12
+      Year2024.Day13
+      Year2024.Day14
+      Year2024.Day15
+      Year2024.Day16
+      Year2024.Day17
+      Year2024.Day18
+      Year2024.Day19
+      Year2024.Day20
+      Year2024.Day21
+      Year2024.Day22
+      Year2024.Day23
+      Year2024.Day24
+      Year2024.Day25
+      Year2025.Day01
+      Year2025.Day02
+      Year2025.Day03
+      Year2025.Day04
+  other-modules:
+      Paths_advent_of_code
+  hs-source-dirs:
+      src
+  default-extensions:
+      OverloadedStrings
+      OverloadedRecordDot
+      DuplicateRecordFields
+      InstanceSigs
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wredundant-constraints -Wno-missing-export-lists -Wno-partial-fields -XTemplateHaskell
+  build-depends:
+      MemoTrie
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , dotenv
+    , lens
+    , optparse-applicative
+    , split
+    , tagsoup
+    , text
+    , wreq
+  default-language: Haskell2010
 
-    build-depends:
-        , base        ^>=4.17.2.1
-        , containers
-        , MemoTrie
-        , split
-        , text
+executable advent-of-code-exe
+  main-is: Main.hs
+  other-modules:
+      Api
+      Cli
+      Paths_advent_of_code
+  hs-source-dirs:
+      app
+  default-extensions:
+      OverloadedStrings
+      OverloadedRecordDot
+      DuplicateRecordFields
+      InstanceSigs
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wredundant-constraints -Wno-missing-export-lists -Wno-partial-fields -O2 -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      MemoTrie
+    , advent-of-code
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , dotenv
+    , lens
+    , optparse-applicative
+    , split
+    , tagsoup
+    , text
+    , wreq
+  default-language: Haskell2010
 
-    default-language: Haskell2010
-
-executable advent-of-code
-    import:           warnings
-    main-is:          Main.hs
-    other-modules:
-        Api
-        Cli
-
-    build-depends:
-        , advent-of-code
-        , base                  ^>=4.17.2.1
-        , bytestring
-        , dotenv
-        , lens
-        , optparse-applicative
-        , tagsoup
-        , text
-        , wreq
-
-    hs-source-dirs:   app
-    default-language: Haskell2010
-
-test-suite test
-    import:           warnings
-    type:             exitcode-stdio-1.0
-    main-is:          Tests.hs
-    other-modules:
-        GridSpec
-        UtilsSpec
-
-    build-depends:
-        , advent-of-code
-        , base            ^>=4.17.2.1
-        , containers
-        , hspec
-        , QuickCheck
-
-    hs-source-dirs:   test
-    default-language: Haskell2010
+test-suite advent-of-code-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      GridSpec
+      Tests
+      UtilsSpec
+      Paths_advent_of_code
+  hs-source-dirs:
+      test
+  default-extensions:
+      OverloadedStrings
+      OverloadedRecordDot
+      DuplicateRecordFields
+      InstanceSigs
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wredundant-constraints -Wno-missing-export-lists -Wno-partial-fields -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      MemoTrie
+    , QuickCheck
+    , advent-of-code
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , dotenv
+    , hspec
+    , lens
+    , optparse-applicative
+    , split
+    , tagsoup
+    , text
+    , wreq
+  default-language: Haskell2010
