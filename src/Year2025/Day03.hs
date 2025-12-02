@@ -1,5 +1,8 @@
 module Year2025.Day03 (solve) where
 
+import qualified Data.Text as T
+import qualified Data.Text.IO as TIO
+
 {- | Part 1
 
 Example:
@@ -7,8 +10,8 @@ Example:
 >>> let example = ""
 >>> part1 example
 -}
-part1 :: String -> Int
-part1 = undefined
+part1 :: T.Text -> Int
+part1 = undefined . pInput
 
 {- | Part 2
 
@@ -17,18 +20,14 @@ Example:
 >>> let example = ""
 >>> part2 example
 -}
-part2 :: String -> Int
-part2 = undefined
+part2 :: T.Text -> Int
+part2 = undefined . pInput
 
-pInput :: String -> a
+pInput :: T.Text -> a
 pInput = undefined
 
 solve :: IO ()
 solve = do
-    -- example <- readFile "./src/Year2024/data/day25-example.txt"
-    -- print $ "Part1 example: " ++ show (part1 example)
-    -- print $ "Part2 example: " ++ show (part2 example)
-
-    content <- readFile "./src/Year2024/data/day25.txt"
+    content <- TIO.readFile "./src/Year2025/data/day03.txt"
     print $ "Part1 solution: " ++ show (part1 content)
     print $ "Part2 solution: " ++ show (part2 content)
