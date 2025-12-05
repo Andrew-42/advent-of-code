@@ -4,9 +4,9 @@ import Control.Monad (foldM)
 import Data.List (elemIndex, findIndex)
 import qualified Utils as U
 
-newtype Grid2D a = Grid2D [[a]] deriving (Show, Eq, Ord)
+newtype Grid2D a = Grid2D {getGrid :: [[a]]} deriving (Show, Eq, Ord)
 
-data Position = Position Int Int deriving (Show, Eq, Ord)
+data Position = Position {col :: Int, row :: Int} deriving (Show, Eq, Ord)
 
 data Shape = Shape Int Int deriving (Show, Eq, Ord)
 
@@ -34,8 +34,8 @@ gridAt (Position x y) (Grid2D g) = U.itemAt y g >>= U.itemAt x
 -- Just (Grid2D [[7,2],[3,4]])
 setGridAt :: a -> Position -> Grid2D a -> Maybe (Grid2D a)
 setGridAt v (Position x y) (Grid2D m) = do
-    row <- U.itemAt y m
-    newRow <- U.setItemAt x v row
+    row' <- U.itemAt y m
+    newRow <- U.setItemAt x v row'
     newGrid <- U.setItemAt y newRow m
     return $ Grid2D newGrid
 
@@ -47,8 +47,8 @@ setAllGridAt v ps g = foldM (flip (setGridAt v)) g ps
 positionOf :: (Eq a) => a -> Grid2D a -> Maybe Position
 positionOf v (Grid2D rs) = do
     y <- findIndex (elem v) rs
-    row <- U.itemAt y rs
-    x <- elemIndex v row
+    row' <- U.itemAt y rs
+    x <- elemIndex v row'
     return $ Position x y
 
 -- >>> positionsOf 2 (Grid2D [[1,2],[2,4]])
