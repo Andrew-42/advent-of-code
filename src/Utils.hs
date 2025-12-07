@@ -125,6 +125,11 @@ indexed = zip [0 ..]
 indexed1 :: [a] -> [(Int, a)]
 indexed1 = zip [1 ..]
 
+-- >>> groupBy id [1, 1, 2, 3, 1, 4, 2, 1]
+-- [[1,1,1,1],[2,2],[3],[4]]
+groupBy :: (Ord k) => (a -> k) -> [a] -> [[a]]
+groupBy f = M.elems . M.fromListWith (++) . map (\x -> (f x, [x]))
+
 -- Matrix
 
 {- | Matrix transpose

@@ -8,7 +8,7 @@ newtype Grid2D a = Grid2D {getGrid :: [[a]]} deriving (Show, Eq, Ord)
 
 data Position = Position {col :: Int, row :: Int} deriving (Show, Eq, Ord)
 
-data Shape = Shape Int Int deriving (Show, Eq, Ord)
+data Shape = Shape {nRows :: Int, nCols :: Int} deriving (Show, Eq, Ord)
 
 data Direction = North | East | South | West deriving (Show, Eq, Ord)
 
