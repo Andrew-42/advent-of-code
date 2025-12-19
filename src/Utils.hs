@@ -3,6 +3,7 @@
 module Utils where
 
 import qualified Data.Map as M
+import Debug.Trace (traceShow)
 
 -- STRING
 
@@ -94,6 +95,8 @@ windowed n f xs = f (take n xs) : windowed n f (tail xs)
 [(1,2),(2,3),(3,4)]
 -}
 zipWithNext :: [a] -> [(a, a)]
+zipWithNext [] = []
+zipWithNext [_] = []
 zipWithNext xs = zip xs $ tail xs
 
 -- >>> pairs [1, 2, 3]
@@ -148,3 +151,7 @@ transpose xs = map head xs : transpose (map tail xs)
 -- fromList [('a',2),('b',1),('c',1),('d',3),('e',3),('f',1),('g',2),('h',1)]
 freq :: (Ord a) => [a] -> M.Map a Int
 freq = foldr (\l m -> M.insertWith (+) l 1 m) M.empty
+
+-- Debug
+tracePrint :: (Show b) => b -> b
+tracePrint x = traceShow x x
