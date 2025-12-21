@@ -87,6 +87,7 @@ library
     , dotenv
     , lens
     , optparse-applicative
+    , pqueue
     , split
     , tagsoup
     , text
@@ -117,6 +118,7 @@ executable advent-of-code-exe
     , dotenv
     , lens
     , optparse-applicative
+    , pqueue
     , split
     , tagsoup
     , text
@@ -151,6 +153,7 @@ test-suite advent-of-code-test
     , hspec
     , lens
     , optparse-applicative
+    , pqueue
     , split
     , tagsoup
     , text
