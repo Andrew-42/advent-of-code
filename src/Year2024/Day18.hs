@@ -123,10 +123,10 @@ part1 s mSize dim = do
 
 data Solution = Solution Int Position [Position] deriving (Show, Eq, Ord)
 
-advance :: Grid2D Char -> Solution -> Grid2D Int -> (S.Set Solution, Grid2D Int)
+advance :: Grid2D Char -> Solution -> Grid2D Int -> ([Solution], Grid2D Int)
 advance g (Solution score p ps) sg = case maybeNsg of
-    Just nsg -> (S.fromList ss, nsg)
-    Nothing -> (S.empty, sg)
+    Just nsg -> (ss, nsg)
+    Nothing -> ([], sg)
   where
     maybeNsg = foldM (\sg' (Solution sc p' _) -> setGridAt sc p' sg') sg ss
     ss =

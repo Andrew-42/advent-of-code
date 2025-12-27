@@ -85,9 +85,10 @@ library
     , comonad
     , containers
     , dotenv
+    , heaps
     , lens
     , optparse-applicative
-    , pqueue
+    , process
     , split
     , tagsoup
     , text
@@ -116,9 +117,10 @@ executable advent-of-code-exe
     , comonad
     , containers
     , dotenv
+    , heaps
     , lens
     , optparse-applicative
-    , pqueue
+    , process
     , split
     , tagsoup
     , text
@@ -150,10 +152,11 @@ test-suite advent-of-code-test
     , comonad
     , containers
     , dotenv
+    , heaps
     , hspec
     , lens
     , optparse-applicative
-    , pqueue
+    , process
     , split
     , tagsoup
     , text
